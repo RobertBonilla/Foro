@@ -1,0 +1,12 @@
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\bin\Debug\netcoreapp3.1\Foro.Infraestructure.deps.json
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\bin\Debug\netcoreapp3.1\Foro.Infraestructure.dll
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\bin\Debug\netcoreapp3.1\Foro.Infraestructure.pdb
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\bin\Debug\netcoreapp3.1\Foro.Core.dll
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\bin\Debug\netcoreapp3.1\Foro.Core.pdb
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.csprojAssemblyReference.cache
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.AssemblyInfoInputs.cache
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.AssemblyInfo.cs
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.csproj.CoreCompileInputs.cache
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.csproj.CopyComplete
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.dll
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Infraestructure\obj\Debug\netcoreapp3.1\Foro.Infraestructure.pdb

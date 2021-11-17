@@ -1,0 +1,9 @@
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\bin\Debug\netcoreapp3.1\Foro.Core.deps.json
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\bin\Debug\netcoreapp3.1\Foro.Core.dll
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\bin\Debug\netcoreapp3.1\Foro.Core.pdb
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\obj\Debug\netcoreapp3.1\Foro.Core.csprojAssemblyReference.cache
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\obj\Debug\netcoreapp3.1\Foro.Core.AssemblyInfoInputs.cache
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\obj\Debug\netcoreapp3.1\Foro.Core.AssemblyInfo.cs
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\obj\Debug\netcoreapp3.1\Foro.Core.csproj.CoreCompileInputs.cache
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\obj\Debug\netcoreapp3.1\Foro.Core.dll
+C:\Users\crobe\Documents\GIT\BAC\Foro\Api\Foro.Back\Foro.Core\obj\Debug\netcoreapp3.1\Foro.Core.pdb

@@ -1,0 +1,174 @@
+﻿@{
+    ViewData["Title"] = "Pregunta [Detalle]";
+    Foro.Front.Models.Dto.DetallePregunta data = (Foro.Front.Models.Dto.DetallePregunta)ViewData["ListaModel"];
+    Foro.Front.Models.Dto.PreguntaDto Pregunta = data.Pregunta;
+    Foro.Front.Models.Domain.Usuario userSession = (ViewData["UserModel"] != null) ? (Foro.Front.Models.Domain.Usuario)ViewData["UserModel"] : null;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Pregunta</h1>
+    <input type="hidden" class="form-control" id="idPreguntaVal" readonly value="@Pregunta.idPregunta">
+</div>
+<div>
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            [@Pregunta.nombre (@Pregunta.username)]
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Titulo</label>
+                <input type="text" class="form-control" id="titulo" aria-describedby="titulo" readonly value="@Pregunta.titulo">
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <textarea class="form-control" id="descripcion" rows="3" readonly>@Pregunta.descripcion</textarea>
+            </div>
+            <p class="card-text"><small class="text-muted">@Pregunta.fecha</small></p>
+            <p class="card-text">
+                <small class="text-muted">
+                    @if (Pregunta.activo)
+                    {
+                        <span>Pregunta Abierta</span>
+                    }
+                    else
+                    {
+                        <span>Pregunta Cerrada</span>
+                    }
+                </small>
+            </p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-secondary" href="/">Regresar</a>
+            @if (Pregunta.activo && userSession != null && Pregunta.idUsuario != userSession.idUsuario)
+            {
+                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#ResponderModal">Responder</button>
+            }
+            @if (Pregunta.activo && userSession !=null && Pregunta.idUsuario == userSession.idUsuario)
+            {
+                <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#CerrarModal">Cerrar Pregunta</button>
+            }
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <h1 class="display-4">Respuestas</h1>
+</div>
+<div>
+    @foreach (var ListaModel in data.ListaRespuesta)
+    {
+        <div class="card border-info mb-3">
+            <div class="card-header">
+                [@ListaModel.nombre (@ListaModel.username)]
+            </div>
+            <div class="card-body">
+                <p class="card-text ">@ListaModel.descripcion</p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">[Fecha = @ListaModel.fecha]</small>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="ResponderModal" tabindex="-1" role="dialog" aria-labelledby="ResponderModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ResponderModalLabel">Nueva Respuesta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmRespuesta" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="txtRespuesta">Respuesta</label>
+                        <textarea class="form-control" id="txtRespuesta" rows="3" required placeholder="Ingrese su Respuesta"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="Responder();">Responder</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CerrarModal" tabindex="-1" role="dialog" aria-labelledby="CerrarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="CerrarModalLabel">CONFIRMACION</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ESTA SEGURO QUE DESEA CERRAR LA PREGUNTA?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" onclick="CerrarPregunta();">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function Responder() {
+        var form = document.getElementById('frmRespuesta');
+        if (form.checkValidity()) {        
+            var urlResponder = '@Url.Action("Responder", "Preguntas")';
+            var idPregunta = document.getElementById('idPreguntaVal').value;
+            var respuesta = document.getElementById('txtRespuesta').value;
+            console.log("Ejecutando");
+            $.ajax({
+                url: urlResponder,
+                type: 'POST',
+                data: { idPregunta: idPregunta, descripcion: respuesta},
+                success: function (result) {
+                    var response = JSON.parse(result);
+                    if (response.Status.HttpCode == 200) {
+                        //alert(response.Item);
+                        location.reload();
+                    }
+                    else {
+                        alert(response.Status.Message);
+                    }
+                },
+                error: function (httpResponse, e) {
+                    console.log(e);
+                    alert("Error en el proceso");
+                },
+                complete: function (result) {
+                }
+            });
+        }
+    }
+
+    function CerrarPregunta() {
+        var urlResponder = '@Url.Action("CerrarPregunta", "Preguntas")';
+        var idPregunta = document.getElementById('idPreguntaVal').value;
+        console.log("Ejecutando");
+        $.ajax({
+            url: urlResponder,
+            type: 'POST',
+            data: { idPregunta: idPregunta},
+            success: function (result) {
+                var response = JSON.parse(result);
+                if (response.Status.HttpCode == 200) {
+                    //alert(response.Item);
+                    location.reload();
+                }
+                else {
+                    alert(response.Status.Message);
+                }
+            },
+            error: function (httpResponse, e) {
+                console.log(e);
+                alert("Error en el proceso");
+            },
+            complete: function (result) {
+            }
+        });
+    }
+</script>

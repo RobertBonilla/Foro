@@ -1,0 +1,138 @@
+﻿
+<div>
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <h3 class="display-4">Iniciar Session</h3>
+        </div>
+        <div class="card-body">
+            <form id="frmInicio" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="txtUsername_ini">Usuario</label>
+                    <input type="text" class="form-control" id="txtUsername_ini" required placeholder="Ingrese el usuario">
+                </div>
+                <div class="form-group">
+                    <label for="txtContra_ini">Password</label>
+                    <input type="password" class="form-control" id="txtContra_ini" required placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary" onclick="IniciarSession();">Ingresar</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#NuevoUsuarioModal">Registrate</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="NuevoUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="NuevoUsuarioModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="NuevoUsuarioModalLabel">Nuevo Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmRegistro" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="txtNombre">Nombre</label>
+                        <input type="text" class="form-control" id="txtNombre" required placeholder="Ingrese su Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtCorreo">Correo Electronico</label>
+                        <input type="email" class="form-control" id="txtCorreo" aria-describedby="emailHelp" required placeholder="Ingrese su correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtUsername">Usuario</label>
+                        <input type="text" class="form-control" id="txtUsername" required placeholder="Ingrese el usuario">
+                        <small id="emailHelp" class="form-text text-muted">Usuario con el que iniciara session</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtContra">Password</label>
+                        <input type="password" class="form-control" id="txtContra" required placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="GuardarRegistro();">Registrar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function IniciarSession() {
+        var form = document.getElementById('frmInicio');
+        if (form.checkValidity()) {
+            var urlResponder = '@Url.Action("IniciarSession", "Registro")';
+            var username = document.getElementById('txtUsername_ini').value;
+            var contra = document.getElementById('txtContra_ini').value;
+            console.log("Ejecutando");
+            $.ajax({
+                url: urlResponder,
+                type: 'POST',
+                data: {
+                    username: username,
+                    contra: contra
+                },
+                success: function (result) {
+                    var response = JSON.parse(result);
+                    if (response.Status.HttpCode == 200) {
+                        //alert("Bienvenido");
+                        location.href = '/';
+                    }
+                    else {
+                        alert(response.Status.Message);
+                    }
+                },
+                error: function (httpResponse, e) {
+                    console.log(e);
+                    alert("Error en el proceso");
+                },
+                complete: function (result) {
+                }
+            });
+        }
+    }
+
+    function GuardarRegistro() {
+        var form = document.getElementById('frmRegistro');
+        if (form.checkValidity()) {
+            var urlResponder = '@Url.Action("Registrar", "Registro")';
+            var nombre = document.getElementById('txtNombre').value;
+            var correo = document.getElementById('txtCorreo').value;
+            var username = document.getElementById('txtUsername').value;
+            var contra = document.getElementById('txtContra').value;
+            console.log("Ejecutando");
+            $.ajax({
+                url: urlResponder,
+                type: 'POST',
+                data: {
+                    nombre: nombre,
+                    correo: correo,
+                    username: username,
+                    contra: contra
+                },
+                success: function (result) {
+                    var response = JSON.parse(result);
+                    if (response.Status.HttpCode == 200) {
+                        alert(response.Item);
+                        location.reload();
+                    }
+                    else {
+                        alert(response.Status.Message);
+                    }
+                },
+                error: function (httpResponse, e) {
+                    console.log(e);
+                    alert("Error en el proceso");
+                },
+                complete: function (result) {
+                }
+            });
+        }
+    }
+
+</script>

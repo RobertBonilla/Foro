@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Preguntas</h1>
+</div>
+<div class="text-left">
+    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#NuevaPreguntaModal">Nueva Pregunta</button>
+</div>
+<div>
+    @foreach (var PreguntaModel in (List<Foro.Front.Models.Dto.PreguntaDto>)ViewData["Lista"])
+    {
+        <div class="card border-primary mb-3">
+            <div class="card-header">
+                [@PreguntaModel.nombre (@PreguntaModel.username)]
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@PreguntaModel.titulo</h5>
+                <p class="card-text ">@PreguntaModel.descripcion</p>
+                <p class="card-text"><small class="text-muted">[Fecha = @PreguntaModel.fecha]</small></p>
+            </div>
+            <div class="card-footer">
+                <a href="/Preguntas/Detail?id=@PreguntaModel.idPregunta" class="btn btn-outline-primary">Ver Respuestas</a>
+            </div>
+        </div>
+    }
+</div>
+
+    <div class="modal fade" id="NuevaPreguntaModal" tabindex="-1" role="dialog" aria-labelledby="NuevaPreguntaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="NuevaPreguntaModalLabel">Nueva Pregunta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmPregunta" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="txtTitulo">Titulo</label>
+                            <input type="text" class="form-control" id="txtTitulo" required placeholder="Ingrese el Titulo de su Pregunta">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtRespuesta">Descripcion</label>
+                            <textarea class="form-control" id="txtDescripcion" rows="3" required placeholder="Ingrese la descripcion de su Pregunta"> </textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="GuardarRespuesta();">Crear</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    function GuardarRespuesta() {
+        var form = document.getElementById('frmPregunta');
+        if (form.checkValidity()) {
+            var urlResponder = '@Url.Action("CrearPregunta", "Preguntas")';
+            var titulo = document.getElementById('txtTitulo').value;
+            var descripcion = document.getElementById('txtDescripcion').value;
+            console.log("Ejecutando");
+            $.ajax({
+                url: urlResponder,
+                type: 'POST',
+                data: { titulo: titulo, descripcion: descripcion},
+                success: function (result) {
+                    var response = JSON.parse(result);
+                    if (response.Status.HttpCode == 200) {
+                        //alert(response.Item);
+                        location.reload();
+                    }
+                    else {
+                        alert(response.Status.Message);
+                    }
+                },
+                error: function (httpResponse, e) {
+                    console.log(e);
+                    alert("Error en el proceso");
+                },
+                complete: function (result) {
+                }
+            });
+        }
+    }
+
+</script>
